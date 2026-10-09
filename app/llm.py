@@ -35,9 +35,10 @@ def get_llm(settings: Settings) -> BaseChatModel:
     if not settings.openai_api_key:
         return EchoChatModel()
     from langchain_openai import ChatOpenAI
+    from pydantic import SecretStr
 
     return ChatOpenAI(
         model=settings.openai_model,
-        api_key=settings.openai_api_key,
+        api_key=SecretStr(settings.openai_api_key),
         temperature=0,
     )

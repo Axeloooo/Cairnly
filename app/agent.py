@@ -1,9 +1,10 @@
-from typing import Annotated, TypedDict
+from typing import Annotated, Any, TypedDict
 
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import AnyMessage, SystemMessage
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
+from langgraph.graph.state import CompiledStateGraph
 
 from app.rag import Retriever
 
@@ -15,14 +16,14 @@ class AgentState(TypedDict):
     context: list[str]
 
 
-def build_agent(llm: BaseChatModel, retriever: Retriever):
+def build_agent(llm: BaseChatModel, retriever: Retriever) -> CompiledStateGraph[Any, Any, Any, Any]:
     """Retrieve relevant documents for the latest message, then answer with the LLM."""
 
-    def retrieve(state: AgentState) -> dict:
+    def retrieve(state: AgentState) -> dict[str, Any]:
         query = str(state["messages"][-1].content)
         return {"context": retriever.search(query)}
 
-    def respond(state: AgentState) -> dict:
+    def respond(state: AgentState) -> dict[str, Any]:
         system = SYSTEM_PROMPT
         if state["context"]:
             system += "\n\nUse this context when relevant:\n" + "\n---\n".join(state["context"])

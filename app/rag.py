@@ -1,4 +1,5 @@
 import uuid
+from typing import Any
 
 import chromadb
 from chromadb.api.types import EmbeddingFunction
@@ -6,7 +7,7 @@ from chromadb.api.types import EmbeddingFunction
 from app.config import Settings
 
 
-def build_embedding_function(settings: Settings) -> EmbeddingFunction | None:
+def build_embedding_function(settings: Settings) -> EmbeddingFunction[Any] | None:
     """Use OpenAI embeddings when a key is set, otherwise Chroma's default local model."""
     if not settings.openai_api_key:
         return None
@@ -22,11 +23,15 @@ class Retriever:
         self,
         collection_name: str,
         path: str | None = None,
-        embedding_function: EmbeddingFunction | None = None,
+        embedding_function: EmbeddingFunction[Any] | None = None,
     ) -> None:
         client = chromadb.PersistentClient(path=path) if path else chromadb.EphemeralClient()
-        kwargs = {"embedding_function": embedding_function} if embedding_function else {}
-        self._collection = client.get_or_create_collection(collection_name, **kwargs)
+        if embedding_function:
+            self._collection = client.get_or_create_collection(
+                collection_name, embedding_function=embedding_function
+            )
+        else:
+            self._collection = client.get_or_create_collection(collection_name)
 
     def add_documents(self, texts: list[str]) -> int:
         ids = [str(uuid.uuid4()) for _ in texts]
@@ -38,4 +43,5 @@ class Retriever:
         if total == 0:
             return []
         result = self._collection.query(query_texts=[query], n_results=min(k, total))
-        return result["documents"][0]
+        documents = result["documents"]
+        return documents[0] if documents else []

@@ -24,7 +24,9 @@ HISTORY_LIMIT = 20
 def create_app(settings: Settings | None = None, retriever: Retriever | None = None) -> FastAPI:
     settings = settings or get_settings()
 
-    connect_args = {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
+    connect_args = (
+        {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
+    )
     engine = create_engine(settings.database_url, connect_args=connect_args)
     Base.metadata.create_all(engine)
 
@@ -59,9 +61,10 @@ def create_app(settings: Settings | None = None, retriever: Retriever | None = N
             db.add(conversation)
             db.flush()
         else:
-            conversation = db.get(Conversation, body.conversation_id)
-            if conversation is None:
+            existing = db.get(Conversation, body.conversation_id)
+            if existing is None:
                 raise HTTPException(status_code=404, detail="conversation not found")
+            conversation = existing
 
         history = _load_history(db, conversation.id)
         result = agent.invoke(
@@ -79,9 +82,7 @@ def create_app(settings: Settings | None = None, retriever: Retriever | None = N
         if db.get(Conversation, conversation_id) is None:
             raise HTTPException(status_code=404, detail="conversation not found")
         query = (
-            select(Message)
-            .where(Message.conversation_id == conversation_id)
-            .order_by(Message.id)
+            select(Message).where(Message.conversation_id == conversation_id).order_by(Message.id)
         )
         return list(db.scalars(query))
 

@@ -24,12 +24,12 @@ Without `OPENAI_API_KEY` the app uses an offline echo model, so everything still
 
 ## API
 
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/health` | Liveness check |
-| POST | `/documents` | Add texts to the Chroma knowledge base |
-| POST | `/chat` | Send a message; omit `conversation_id` to start a new conversation |
-| GET | `/conversations/{id}/messages` | Read a conversation's history |
+| Method | Path                           | Purpose                                                            |
+| ------ | ------------------------------ | ------------------------------------------------------------------ |
+| GET    | `/health`                      | Liveness check                                                     |
+| POST   | `/documents`                   | Add texts to the Chroma knowledge base                             |
+| POST   | `/chat`                        | Send a message; omit `conversation_id` to start a new conversation |
+| GET    | `/conversations/{id}/messages` | Read a conversation's history                                      |
 
 ```bash
 curl -X POST localhost:8000/documents -H 'content-type: application/json' \
