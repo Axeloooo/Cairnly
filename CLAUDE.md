@@ -24,6 +24,10 @@ pre-commit install --install-hooks
 ## Commits (Conventional Commits, enforced by commitlint)
 
 Types: feat, fix, docs, infra, refactor, test, chore (also perf, build, ci, revert).
+
+Authorship: Claude is never the author or co-author of a commit. Commits carry the author's name
+and email only, with no `Co-Authored-By` or `Claude-Session` trailers. The author and committer
+on this repo are Axel. commitlint rejects messages that name Claude in a trailer.
 Examples: `feat: add document upload endpoint`, `fix: return 404 for unknown conversation`,
 `infra: add release workflow`. Breaking change: `feat!:` or a `BREAKING CHANGE:` footer.
 
