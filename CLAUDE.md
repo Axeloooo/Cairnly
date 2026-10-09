@@ -28,7 +28,7 @@ Python commands run from `apps/api` (`cd apps/api`); prettier runs from the repo
   `npx prettier --check . --ignore-unknown`)
 - Types: mypy (`mypy app`)
 - Tests: `pytest -q`
-- Run: `uvicorn app.main:app --reload`
+- Run: `uvicorn app.main:create_app --factory --reload`
 
 ## Commits (Conventional Commits, enforced by commitlint)
 

@@ -104,6 +104,3 @@ def _load_history(db: Session, conversation_id: int) -> list[BaseMessage]:
         else:
             history.append(AIMessage(content=row.content))
     return history
-
-
-app = create_app()

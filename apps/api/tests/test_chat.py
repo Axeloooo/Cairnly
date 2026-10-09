@@ -1,4 +1,5 @@
 import hashlib
+from typing import Any
 
 import pytest
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
@@ -14,6 +15,13 @@ class KeywordEmbedding(EmbeddingFunction[Documents]):
 
     def __init__(self) -> None:
         self._dim = 64
+
+    def get_config(self) -> dict[str, Any]:
+        return {"dim": self._dim}
+
+    @staticmethod
+    def build_from_config(config: dict[str, Any]) -> "KeywordEmbedding":
+        return KeywordEmbedding()
 
     def __call__(self, input: Documents) -> Embeddings:  # noqa: A002
         vectors = []

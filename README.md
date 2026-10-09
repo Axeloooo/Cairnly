@@ -18,7 +18,7 @@ python -m venv .venv && source .venv/bin/activate
 cd apps/api
 pip install -r requirements.txt
 cp .env.example .env            # optional: add OPENAI_API_KEY
-uvicorn app.main:app --reload
+uvicorn app.main:create_app --factory --reload
 ```
 
 Build the container with `docker build -t cairnly apps/api`.
