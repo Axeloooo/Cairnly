@@ -223,3 +223,6 @@ __marimo__/
 node_modules/
 .pre-commit-cache/
 *.db
+
+# Web
+apps/web/dist/
