@@ -14,13 +14,13 @@ pre-commit install --install-hooks
 ## Layout
 
 - `apps/api/`: FastAPI service (`app/`, `tests/`, `pyproject.toml`, requirements, `Dockerfile`, `.env.example`)
-- `apps/web/`: reserved for the future React/TypeScript UI
+- `apps/web/`: Vite + React + TypeScript UI (product name Headnote) on mock data; API calls are isolated in `src/api/`
 - `packages/`: reserved for shared code
 - Root: tooling and meta (`.pre-commit-config.yaml`, `.github/`, `package.json`, commitlint, semantic-release, prettier, `docs/`)
 
 ## Commands
 
-Python commands run from `apps/api` (`cd apps/api`); prettier runs from the repo root.
+Python commands run from `apps/api` (`cd apps/api`); web commands run from `apps/web`; prettier runs from the repo root.
 
 - Python format: black (`black .`, check with `black --check .`)
 - Python lint: ruff (`ruff check .`, `ruff check . --fix`); ruff's formatter is not used
@@ -29,6 +29,7 @@ Python commands run from `apps/api` (`cd apps/api`); prettier runs from the repo
 - Types: mypy (`mypy app`)
 - Tests: `pytest -q`
 - Run: `uvicorn app.main:create_app --factory --reload`
+- Web (from `apps/web`): `npm install`, `npm run dev`, `npm run typecheck`, `npm test`, `npm run build`
 
 ## Commits (Conventional Commits, enforced by commitlint)
 

@@ -8,3 +8,6 @@ CHANGELOG.md
 
 # Vendored Claude skills, copied verbatim
 .claude/skills/
+
+# Web build output
+apps/web/dist/

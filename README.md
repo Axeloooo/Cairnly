@@ -41,6 +41,10 @@ curl -X POST localhost:8000/chat -H 'content-type: application/json' \
   -d '{"message": "Where are conversations kept?"}'
 ```
 
+## Web UI
+
+The UI lives in `apps/web` (Vite, React, TypeScript) under the product name Headnote. It runs on mock data until the API exposes sources and a document listing. See [apps/web/README.md](apps/web/README.md).
+
 ## Tests
 
 ```bash
