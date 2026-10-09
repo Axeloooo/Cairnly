@@ -1,19 +1,19 @@
 # AWS deployment notes
 
-The app ships as a single container (see `Dockerfile`), so the simplest path is ECS on Fargate behind an Application Load Balancer.
+The app ships as a single container (see `apps/api/Dockerfile`), so the simplest path is ECS on Fargate behind an Application Load Balancer.
 
 ## Steps
 
 1. **Build and push the image** to ECR:
    ```bash
    aws ecr create-repository --repository-name cairnly
-   docker build -t cairnly .
+   docker build -t cairnly apps/api
    docker tag cairnly <account>.dkr.ecr.<region>.amazonaws.com/cairnly:latest
    aws ecr get-login-password | docker login --username AWS --password-stdin <account>.dkr.ecr.<region>.amazonaws.com
    docker push <account>.dkr.ecr.<region>.amazonaws.com/cairnly:latest
    ```
 2. **Database.** SQLite is fine for a demo, but Fargate tasks do not keep local files. Use RDS PostgreSQL and set
-   `DATABASE_URL=postgresql+psycopg://...` (add `psycopg[binary]` to `requirements.txt`).
+   `DATABASE_URL=postgresql+psycopg://...` (add `psycopg[binary]` to `apps/api/requirements.txt`).
 3. **Vector store.** Chroma runs in-process. For persistence on ECS, mount an EFS volume and set `CHROMA_PATH` to it,
    or move to a hosted vector store later.
 4. **Secrets.** Store `OPENAI_API_KEY` and `LANGSMITH_API_KEY` in AWS Secrets Manager and reference them from the task

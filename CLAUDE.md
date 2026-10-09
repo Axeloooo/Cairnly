@@ -6,12 +6,21 @@ FastAPI + LangGraph chat agent with a Chroma retriever and SQLAlchemy persistenc
 
 ```
 python -m venv .venv && . .venv/bin/activate
-pip install -r requirements-dev.txt
+pip install -r apps/api/requirements-dev.txt
 npm install                       # commitlint + semantic-release
 pre-commit install --install-hooks
 ```
 
+## Layout
+
+- `apps/api/`: FastAPI service (`app/`, `tests/`, `pyproject.toml`, requirements, `Dockerfile`, `.env.example`)
+- `apps/web/`: reserved for the future React/TypeScript UI
+- `packages/`: reserved for shared code
+- Root: tooling and meta (`.pre-commit-config.yaml`, `.github/`, `package.json`, commitlint, semantic-release, prettier, `docs/`)
+
 ## Commands
+
+Python commands run from `apps/api` (`cd apps/api`); prettier runs from the repo root.
 
 - Python format: black (`black .`, check with `black --check .`)
 - Python lint: ruff (`ruff check .`, `ruff check . --fix`); ruff's formatter is not used

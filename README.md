@@ -5,20 +5,23 @@ Based on the "Build Your Own ChatGPT Agent" project from YouTube video `Zy7EXDON
 
 ## Stack
 
-- **FastAPI** for the HTTP API (`app/main.py`)
-- **LangGraph** agent: retrieve from Chroma, then respond with the LLM (`app/agent.py`)
-- **ChromaDB** knowledge base (`app/rag.py`)
-- **SQLAlchemy** storage for conversations and messages (`app/models.py`)
+- **FastAPI** for the HTTP API (`apps/api/app/main.py`)
+- **LangGraph** agent: retrieve from Chroma, then respond with the LLM (`apps/api/app/agent.py`)
+- **ChromaDB** knowledge base (`apps/api/app/rag.py`)
+- **SQLAlchemy** storage for conversations and messages (`apps/api/app/models.py`)
 - **LangSmith** tracing, enabled through environment variables
 
 ## Run locally
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
+cd apps/api
 pip install -r requirements.txt
 cp .env.example .env            # optional: add OPENAI_API_KEY
 uvicorn app.main:app --reload
 ```
+
+Build the container with `docker build -t cairnly apps/api`.
 
 Without `OPENAI_API_KEY` the app uses an offline echo model, so everything still runs end to end.
 
@@ -41,6 +44,7 @@ curl -X POST localhost:8000/chat -H 'content-type: application/json' \
 ## Tests
 
 ```bash
+cd apps/api
 pytest
 ```
 
