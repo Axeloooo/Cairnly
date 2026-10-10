@@ -48,9 +48,10 @@ Examples: `feat: add document upload endpoint`, `fix: return 404 for unknown con
 
 ## Release flow
 
-Work lands on `devel` via PR. Releases go from `devel` to `main` via a release PR.
-semantic-release runs on `main`, tags the version and updates `CHANGELOG.md`. Never commit
-to `main` directly.
+Work lands on `devel` via PR. Feature PRs and release PRs are squash-merged, so the PR title must
+be a valid conventional commit. Releases: cut `release/YYYY-MM-DD` from `devel`, open a PR into
+`main` and squash-merge it. semantic-release runs on `main`, tags the version and updates
+`CHANGELOG.md`. Never commit to `main` directly.
 
 ## Workflow for substantial changes
 
