@@ -76,7 +76,7 @@ def test_chat_continues_existing_conversation(client):
 
 
 def test_chat_uses_ingested_documents(client):
-    client.post("/documents", json={"texts": ["Cairnly stores conversations in SQLAlchemy"]})
+    client.post("/documents", json={"texts": ["Headnote stores conversations in SQLAlchemy"]})
     body = client.post("/chat", json={"message": "where are conversations stored"}).json()
     assert "with retrieved context" in body["reply"]
 

@@ -1,4 +1,4 @@
-# Cairnly
+# Headnote
 
 FastAPI + LangGraph chat agent with a Chroma retriever and SQLAlchemy persistence.
 

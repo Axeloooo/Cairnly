@@ -8,7 +8,7 @@ from langgraph.graph.state import CompiledStateGraph
 
 from app.rag import Retriever
 
-SYSTEM_PROMPT = "You are Cairnly, a concise and helpful assistant."
+SYSTEM_PROMPT = "You are Headnote, a concise and helpful assistant."
 
 
 class AgentState(TypedDict):

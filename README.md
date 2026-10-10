@@ -1,4 +1,4 @@
-# Cairnly
+# Headnote
 
 A ChatGPT-style agent built with LangGraph, FastAPI, LangSmith, ChromaDB and SQLAlchemy.
 Based on the "Build Your Own ChatGPT Agent" project from YouTube video `Zy7EXDONlTY`.
@@ -21,7 +21,7 @@ cp .env.example .env            # optional: add OPENAI_API_KEY
 uvicorn app.main:create_app --factory --reload
 ```
 
-Build the container with `docker build -t cairnly apps/api`.
+Build the container with `docker build -t headnote apps/api`.
 
 Without `OPENAI_API_KEY` the app uses an offline echo model, so everything still runs end to end.
 
@@ -36,7 +36,7 @@ Without `OPENAI_API_KEY` the app uses an offline echo model, so everything still
 
 ```bash
 curl -X POST localhost:8000/documents -H 'content-type: application/json' \
-  -d '{"texts": ["Cairnly keeps conversations in SQLite by default."]}'
+  -d '{"texts": ["Headnote keeps conversations in SQLite by default."]}'
 curl -X POST localhost:8000/chat -H 'content-type: application/json' \
   -d '{"message": "Where are conversations kept?"}'
 ```
@@ -54,6 +54,14 @@ pytest
 
 Tests use a file-based SQLite database and a deterministic embedding function, so they make no network calls.
 
+## Upgrading from the Cairnly name
+
+The project was renamed from Cairnly to Headnote. The default SQLite file is now `headnote.db` and the
+default Chroma collection is `headnote_docs`, so an existing local `cairnly.db` or `cairnly_docs`
+collection is no longer picked up. Keep your data by renaming `cairnly.db` to `headnote.db`, or by
+setting `DATABASE_URL` and `CHROMA_COLLECTION` to the old values in `.env`. The LangSmith project name
+and the Docker and ECR image names also changed to `headnote`.
+
 ## LangSmith tracing
 
 Set these in `.env` and every agent run is traced:
@@ -61,7 +69,7 @@ Set these in `.env` and every agent run is traced:
 ```
 LANGSMITH_TRACING=true
 LANGSMITH_API_KEY=...
-LANGSMITH_PROJECT=cairnly
+LANGSMITH_PROJECT=headnote
 ```
 
 ## AWS deployment
