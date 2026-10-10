@@ -6,11 +6,11 @@ The app ships as a single container (see `apps/api/Dockerfile`), so the simplest
 
 1. **Build and push the image** to ECR:
    ```bash
-   aws ecr create-repository --repository-name cairnly
-   docker build -t cairnly apps/api
-   docker tag cairnly <account>.dkr.ecr.<region>.amazonaws.com/cairnly:latest
+   aws ecr create-repository --repository-name headnote
+   docker build -t headnote apps/api
+   docker tag headnote <account>.dkr.ecr.<region>.amazonaws.com/headnote:latest
    aws ecr get-login-password | docker login --username AWS --password-stdin <account>.dkr.ecr.<region>.amazonaws.com
-   docker push <account>.dkr.ecr.<region>.amazonaws.com/cairnly:latest
+   docker push <account>.dkr.ecr.<region>.amazonaws.com/headnote:latest
    ```
 2. **Database.** SQLite is fine for a demo, but Fargate tasks do not keep local files. Use RDS PostgreSQL and set
    `DATABASE_URL=postgresql+psycopg://...` (add `psycopg[binary]` to `apps/api/requirements.txt`).

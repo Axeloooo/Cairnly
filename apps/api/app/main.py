@@ -38,7 +38,7 @@ def create_app(settings: Settings | None = None, retriever: Retriever | None = N
         )
     agent = build_agent(get_llm(settings), retriever)
 
-    app = FastAPI(title="Cairnly")
+    app = FastAPI(title="Headnote")
     app.state.session_factory = sessionmaker(bind=engine, expire_on_commit=False)
     app.state.retriever = retriever
 

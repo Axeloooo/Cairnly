@@ -1,7 +1,6 @@
 # Headnote web
 
-React and TypeScript UI for Headnote, the product name for the Cairnly chat agent. The repo and
-API keep the name Cairnly; the interface says Headnote.
+React and TypeScript UI for Headnote, the chat agent.
 
 This is a set of template screens on mock data: chat with source pills inside the sentence, a
 document library, and an empty state. Design tokens come from the C-A spread of the brand
